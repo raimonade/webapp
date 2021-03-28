@@ -1,0 +1,12 @@
+appId: com.monkai.peoplecount
+productName: Monk.ai Peoplecounter
+copyright: Copyright © 2021 Monk.ai
+directories:
+  output: dist
+  buildResources: resources
+files:
+  - from: .
+    filter:
+      - package.json
+      - app
+publish: null

@@ -1,0 +1,68 @@
+.Screen {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	padding: var(--paddingY) var(--paddingX);
+	background-color: var(--green);
+    transition: all 0.25s;
+
+    display: grid;
+    place-content: center;
+
+    &[allowed="false"]{
+        background-color: var(--red);
+    }
+}
+
+.PeopleCount {
+	display: flex;
+	align-items: center;
+    position: absolute;
+    top:var(--paddingY);
+    left: var(--paddingX);
+
+	span {
+		font-weight: 600;
+		font-size: 1.6vw;
+		color: var(--white);
+	}
+
+	svg {
+		width: 5vw;
+		margin-right: 20px;
+		fill: var(--white);
+	}
+}
+
+.Icon {
+	position: relative;
+	width: auto;
+	height: 25vw;
+
+	svg {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		fill: var(--white);
+	}
+
+	.Hand {
+		left: 50%;
+		top: 50%;
+		transform: translate(-55%, -50%);
+		width: 50%;
+	}
+}
+
+.Body {
+    margin-top:30px;
+
+	h1 {
+		font-size: 3vw;
+		color: var(--white);
+        margin-top:30px;
+		text-align: center;
+	}
+}
