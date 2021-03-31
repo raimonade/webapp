@@ -1,7 +1,6 @@
 import { app } from 'electron';
 import serve from 'electron-serve';
 import { createWindow } from './helpers';
-import {PythonShell} from 'python-shell';
 const isProd: boolean = process.env.NODE_ENV === 'production';
 
 if (isProd) {
@@ -16,11 +15,6 @@ if (isProd) {
   const mainWindow = createWindow('main', {
     width: 1000,
     height: 600,
-  });
-
-
-  PythonShell.run('./scripts/app.py',null, (err, res) => {
-    if (err) console.log(err);
   });
 
   if (isProd) {

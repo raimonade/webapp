@@ -8,16 +8,41 @@ import axios from 'axios';
 
 const UserScreen = ({ apiData }) => {
 	const [resp, setresp] = useState({});
-	const [allowed, setallowed] = useState(false);
-	let timeout;
+	const [allowed, _setAllowed] = useState(false);
+	let timeout = null;
+	const allowedRef = React.useRef(allowed);
+	const setAllowed = (data) => {
+		allowedRef.current = data;
+		_setAllowed(data);
+	};
+
+	const allowedSound = useRef(null);
+	const notAllowedSound = useRef(null);
 
 	// On Component Mount
 	useEffect(() => {
 		getCameraData('http://localhost:5000/firstboot');
-
+		window.addEventListener('keydown', onKeydown);
 		// On component unmount
-		return () => clearTimeout(timeout);
+		return () => {
+			window.removeEventListener('keydown', onKeydown);
+			clearTimeout(timeout);
+		};
 	}, []);
+
+	function onKeydown(e) {
+		switch (e.key) {
+			case 'ArrowLeft':
+				setAllowed(false);
+				break;
+			case 'ArrowRight':
+				setAllowed(true);
+				break;
+			default:
+				return;
+		}
+		setSound();
+	}
 
 	function getCameraData(url = 'http://localhost:5000') {
 		// tas pats fetch requests, tikai ar moduli
@@ -29,11 +54,30 @@ const UserScreen = ({ apiData }) => {
 			.catch((err) => onError(err));
 	}
 
+	function setSound(isAllowed = allowedRef.current) {
+		notAllowedSound.current.currentTime = 0;
+		notAllowedSound.current.pause();
+		allowedSound.current.pause();
+		allowedSound.current.currentTime = 0;
+
+		if (!isAllowed) {
+			allowedSound.current.play();
+			return;
+		}
+
+		notAllowedSound.current.play();
+	}
+
 	function onSuccess(res) {
 		setresp(res);
 		const all = res.MaxPeople - res.PeopleCount > 0;
-		setallowed(all);
-		timeout = setTimeout(() => getCameraData(), 1000);
+
+		if (res !== all) {
+			setSound(all);
+			setAllowed(all);
+		}
+
+		timeout = setTimeout(() => getCameraData(), 333);
 	}
 
 	function onError(err) {
@@ -42,6 +86,9 @@ const UserScreen = ({ apiData }) => {
 
 	return (
 		<div className={s.Screen} allowed={allowed.toString()}>
+			<audio ref={allowedSound} src="sounds/ding.mp3"></audio>
+			<audio ref={notAllowedSound} src="sounds/VeikalsPilns.wav"></audio>
+
 			<div className={s.PeopleCount}>
 				<People />
 				<span>
