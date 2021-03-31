@@ -61,11 +61,11 @@ const UserScreen = ({ apiData }) => {
 		allowedSound.current.currentTime = 0;
 
 		if (!isAllowed) {
-			allowedSound.current.play();
+			notAllowedSound.current.play();
 			return;
 		}
+		allowedSound.current.play();
 
-		notAllowedSound.current.play();
 	}
 
 	function onSuccess(res) {
