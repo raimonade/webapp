@@ -11,30 +11,32 @@ const UserScreen = ({ apiData }) => {
 	const [allowed, setallowed] = useState(false);
 	let timeout;
 
+	// On Component Mount
 	useEffect(() => {
-		getCameraData();
+		getCameraData('http://localhost:5000/firstboot');
+
+		// On component unmount
 		return () => clearTimeout(timeout);
 	}, []);
 
-	function getCameraData() {
+	function getCameraData(url = 'http://localhost:5000') {
+		// tas pats fetch requests, tikai ar moduli
+		// kuram labaks error handlings utt,
+		// bet ideja nemainas
 		axios
-			.get('http://localhost:5000')
-			.then(({data}) => onSuccess(data))
+			.get(url)
+			.then(({ data }) => onSuccess(data))
 			.catch((err) => onError(err));
 	}
 
 	function onSuccess(res) {
 		setresp(res);
-		console.log(res);
 		const all = res.MaxPeople - res.PeopleCount > 0;
 		setallowed(all);
-		console.log(res.MaxPeople);
-		console.log(res.PeopleCount);
 		timeout = setTimeout(() => getCameraData(), 1000);
 	}
 
 	function onError(err) {
-		console.error(err);
 		clearTimeout(timeout);
 	}
 
