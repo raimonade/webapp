@@ -21,9 +21,10 @@ const UserScreen = ({ apiData }) => {
 
 	// On Component Mount
 	useEffect(() => {
-		getCameraData('http://localhost:5000/firstboot');
+		axios.get('http://localhost:5000/firstboot');
 		window.addEventListener('keydown', onKeydown);
 		// On component unmount
+		timeout = setTimeout(() => getCameraData(), 333);
 		return () => {
 			window.removeEventListener('keydown', onKeydown);
 			clearTimeout(timeout);
