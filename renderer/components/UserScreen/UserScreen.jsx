@@ -71,9 +71,9 @@ const UserScreen = ({ apiData }) => {
 
 	function onSuccess(res) {
 		setresp(res);
+		console.log(res);
 		const all = res.MaxPeople - res.PeopleCount > 0;
-
-		if (res !== all) {
+		if (allowedRef.current !== all) {
 			setSound(all);
 			setAllowed(all);
 		}
