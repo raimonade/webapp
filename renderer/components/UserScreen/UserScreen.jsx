@@ -70,14 +70,14 @@ const UserScreen = ({ apiData }) => {
 	}
 
 	function onSuccess(res) {
-		setresp(res);
+		
 		const all = res.MaxPeople - res.PeopleCount > 0;
-
-		if (res !== all) {
+		if (allowedRef.current !== all) {
 			setSound(all);
 			setAllowed(all);
 		}
-
+		setresp(res);
+		
 		timeout = setTimeout(() => getCameraData(), 333);
 	}
 
