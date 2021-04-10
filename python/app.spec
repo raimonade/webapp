@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['app.py'],
-             pathex=['/Users/raimondskorzenevskis/Documents/MONK_AI/WebApp/python'],
+             pathex=['/Users/robertslevics/Documents/webapp/python'],
              binaries=[],
              datas=[],
              hiddenimports=[],
